@@ -1,0 +1,308 @@
+type Mutation {
+  UserLoginMutation(input: UserLoginInput!): UserLoginPayload
+  UserAddMutation(input: UserAddInput!): UserAddPayload
+  ProductAddMutation(input: ProductAddInput!): ProductAddPayload
+  OrderAddMutation(input: OrderAddInput!): OrderAddPayload
+  OrderCloseMutation(input: OrderCloseInput!): OrderClosePayload
+  OrderItemAddMutation(input: OrderItemAddInput!): OrderItemAddPayload
+  OrderItemEditMutation(input: OrderItemEditInput!): OrderItemEditPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+enum OperationType {
+  ADD
+  REMOVE
+}
+
+# Order type definition
+type Order implements Node {
+  # The ID of an object
+  id: ID!
+  _id: String!
+
+  # Product of the order
+  orderItems: [OrderItem]
+
+  # Quantity of the products
+  qty: Int
+
+  # Total of the products
+  total: Int
+
+  # Active of the product
+  active: Boolean!
+}
+
+input OrderAddInput {
+  # Quantity of the order
+  qty: Int!
+  clientMutationId: String
+}
+
+type OrderAddPayload {
+  order: Order
+  error: String
+  clientMutationId: String
+}
+
+input OrderCloseInput {
+  # id of the order
+  id: String!
+
+  # Active of the order
+  active: Boolean
+  clientMutationId: String
+}
+
+type OrderClosePayload {
+  order: Order
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type OrderConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [OrderEdge]
+}
+
+# An edge in a connection.
+type OrderEdge {
+  # The item at the end of the edge
+  node: Order!
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# OrderItem type definition
+type OrderItem {
+  # Returns the id of the order that this item belongs to
+  orderId: String
+
+  # Product of the order
+  product: Product!
+
+  # Quantity of the products
+  qty: Int!
+
+  # Total of the products
+  total: Int!
+}
+
+input OrderItemAddInput {
+  # Order id of the order item
+  orderId: ID!
+
+  # Product of the order item
+  product: ID!
+
+  # Quantity of the order item
+  qty: Int!
+  clientMutationId: String
+}
+
+type OrderItemAddPayload {
+  order: Order
+  error: String
+  clientMutationId: String
+}
+
+input OrderItemEditInput {
+  # Order id of the order item
+  orderId: ID!
+
+  # Product of the order item
+  product: ID!
+
+  # Quantity of the order item
+  qty: Int!
+
+  # Operation of the order item
+  operation: OperationType!
+  clientMutationId: String
+}
+
+type OrderItemEditPayload {
+  order: Order
+  error: String
+  clientMutationId: String
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# Product type definition
+type Product implements Node {
+  # The ID of an object
+  id: ID!
+  _id: String!
+
+  # Description of the product
+  description: String!
+
+  # Value of the product
+  value: Int!
+
+  # Quantity of the product
+  qty: Int
+
+  # URL of the product
+  picture: String!
+
+  # Active of the product
+  active: Boolean!
+}
+
+input ProductAddInput {
+  # Description of the product
+  description: String!
+
+  # Value of the product
+  value: Int!
+
+  # Quantity of the product
+  qty: Int
+
+  # URL of the product
+  picture: String!
+
+  # Active of the product
+  active: Boolean!
+  clientMutationId: String
+}
+
+type ProductAddPayload {
+  product: Product
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type ProductConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [ProductEdge]
+}
+
+# An edge in a connection.
+type ProductEdge {
+  # The item at the end of the edge
+  node: Product!
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# The root of all... queries
+type Query {
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+
+  # Me is the logged user
+  me: User
+  users(after: String, first: Int, before: String, last: Int, search: String): UserConnection!
+
+  # Get product
+  product(id: ID!): Product
+
+  # Find Products
+  products(after: String, first: Int, before: String, last: Int, search: String): ProductConnection!
+
+  # Get order
+  order(id: ID!): Order
+
+  # Get orders
+  orders(after: String, first: Int, before: String, last: Int, search: String): OrderConnection!
+}
+
+# User type definition
+type User implements Node {
+  # ID of the user
+  id: ID!
+
+  # Name of the user
+  name: String
+
+  # Password of the user
+  password: String
+
+  # Email of the user
+  email: String
+
+  # Active of the user
+  active: Boolean
+
+  # isAdmin of the user
+  isAdmin: Boolean
+}
+
+input UserAddInput {
+  name: String!
+  password: String
+  email: String!
+  active: Boolean
+  clientMutationId: String
+}
+
+type UserAddPayload {
+  user: User
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [UserEdge]
+}
+
+# An edge in a connection.
+type UserEdge {
+  # The item at the end of the edge
+  node: User!
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type UserLoginPayload {
+  token: String
+  error: String
+  clientMutationId: String
+}
+
