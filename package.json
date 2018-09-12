@@ -17,15 +17,20 @@
     "start": "react-app-rewired start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "update-schema": "get-graphql-schema http://localhost:5000/graphql > src/schema.graphql",
+    "relay": "./node_modules/.bin/relay-compiler --src ./src/ --schema ./src/schema.graphql"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-relay": "^1.6.2",
+    "babel-preset-flow": "^6.23.0",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
+    "flow-bin": "^0.80.0",
     "graphql": "^14.0.2",
     "react-app-rewired": "^1.6.2",
     "relay-compiler": "^1.6.2"

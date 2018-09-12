@@ -39,13 +39,16 @@ type Order implements Node {
 }
 
 input OrderAddInput {
-  # Quantity of the order
+  # Product of the order item
+  product: ID!
+
+  # Quantity of the order item
   qty: Int!
   clientMutationId: String
 }
 
 type OrderAddPayload {
-  order: Order
+  orderEdge: OrderEdge
   error: String
   clientMutationId: String
 }
@@ -60,7 +63,7 @@ input OrderCloseInput {
 }
 
 type OrderClosePayload {
-  order: Order
+  orderEdge: OrderEdge
   error: String
   clientMutationId: String
 }
@@ -111,7 +114,7 @@ input OrderItemAddInput {
 }
 
 type OrderItemAddPayload {
-  order: Order
+  orderEdge: OrderEdge
   error: String
   clientMutationId: String
 }
@@ -132,7 +135,7 @@ input OrderItemEditInput {
 }
 
 type OrderItemEditPayload {
-  order: Order
+  orderEdge: OrderEdge
   error: String
   clientMutationId: String
 }
@@ -238,7 +241,7 @@ type Query {
   order(id: ID!): Order
 
   # Get orders
-  orders(after: String, first: Int, before: String, last: Int, search: String): OrderConnection!
+  orders(after: String, first: Int, before: String, last: Int, active: Boolean): OrderConnection!
 }
 
 # User type definition

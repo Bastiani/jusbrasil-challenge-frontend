@@ -3,8 +3,13 @@ import styled, { createGlobalStyle } from 'styled-components';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { graphql, createFragmentContainer } from 'react-relay';
+import { Link } from 'react-router-dom';
 
-import ListProducts from './components/ListProducts';
+import createQueryRenderer from './relay/createQueryRenderer';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -16,22 +21,30 @@ const GlobalStyle = createGlobalStyle`
   body {
     width: 100%;
     height: 100%;
+    background-color: #edeef9;
   }
 `;
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 5vw 100vh;
+  grid-gap: 0.1rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    'header'
+    'content';
 `;
 
 const Header = styled.div`
   padding: 10px;
   background-color: #edeef9;
+  grid-area: header;
 `;
 
 const Content = styled.div`
   padding: 10px;
-  background-color: #edeef9;
+  margin-top: 45px;
+  grid-area: content;
 `;
 
 const AppBarStyled = styled(AppBar)`
@@ -40,22 +53,70 @@ const AppBarStyled = styled(AppBar)`
   }
 `;
 
-const App = () => (
+const ToolbarStyled = styled(Toolbar)`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const LinkStyled = styled(Link)`
+  text-decoration: none;
+`;
+
+const IconButtonStyled = styled(IconButton)`
+  margin-right: 10px;
+`;
+
+const App = ({ children, query }) => (
   <Container>
     <GlobalStyle />
     <Header>
       <AppBarStyled>
-        <Toolbar>
+        <ToolbarStyled>
           <Typography variant="title" color="inherit" noWrap>
-            JusBrasil Challenge
+            <LinkStyled to="/">JusBrasil Challenge</LinkStyled>
           </Typography>
-        </Toolbar>
+          <div>
+            <IconButtonStyled aria-label="Cart">
+              <Badge
+                badgeContent={query.orders.edges[0] ? query.orders.edges[0].node.qty : 0}
+                color="primary"
+              >
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButtonStyled>
+            {query.orders.edges[0] ? query.orders.edges[0].node.total : 'R$ 0'}
+          </div>
+        </ToolbarStyled>
       </AppBarStyled>
     </Header>
-    <Content>
-      <ListProducts />
-    </Content>
+    <Content>{children}</Content>
   </Container>
 );
 
-export default App;
+const AppFragment = createFragmentContainer(App, {
+  query: graphql`
+    fragment App_query on Query @argumentDefinitions(first: { type: "Int", defaultValue: 1 }) {
+      orders(first: $first, active: true) @connection(key: "App_orders", filters: []) {
+        edges {
+          node {
+            id
+            qty
+            total
+          }
+        }
+      }
+    }
+  `,
+});
+
+export default createQueryRenderer(AppFragment, {
+  query: graphql`
+    query AppQuery($first: Int) {
+      ...App_query @arguments(first: $first)
+    }
+  `,
+  variables: {
+    first: 1,
+  },
+});
