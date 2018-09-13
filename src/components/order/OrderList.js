@@ -116,7 +116,7 @@ class OrderList extends React.Component<Props, State> {
 
   ItemCard = (orderItem, orders, handleItemPurchase) => (
     <CardStyled key={`item-${orderItem.product.id}`}>
-      <ItemLink to={`/orderItem.product/details/${orderItem.product.id}`}>
+      <ItemLink to={`/product/details/${orderItem.product.id}`}>
         <ProductImage image={orderItem.product.picture} title="item" />
         <CardContentStyled>
           <Typography gutterBottom variant="headline" component="h2">
