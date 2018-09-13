@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import ListProducts from './components/product/ListProducts';
 import ProductDetails from './components/product/ProductDetails';
+import OrderList from './components/order/OrderList';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -14,6 +15,7 @@ ReactDOM.render(
       <App>
         <Route exact path="/" component={ListProducts} />
         <Route path="/product/details/:id" component={ProductDetails} />
+        <Route path="/order/list" component={OrderList} />
       </App>
     </Switch>
   </BrowserRouter>,

@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 
+import { BRL } from '../common/Money';
+
 import createQueryRenderer from '../../relay/createQueryRenderer';
 import OrderAddMutation from '../order/OrderAddMutation';
 import OrderItemAddMutation from '../order/OrderItemAddMutation';
@@ -63,7 +65,7 @@ const ItemCard = (product, orders, handleItemPurchase) => (
         <Typography gutterBottom variant="headline" component="h2">
           {product.description}
         </Typography>
-        <Typography component="p">{product.value}</Typography>
+        <Typography component="p">{BRL(product.value).format(true)}</Typography>
       </CardContentStyled>
     </ItemLink>
     <CardActions>
@@ -88,17 +90,18 @@ class ListProducts extends React.Component<Props, State> {
   };
 
   onCompleted = res => {
+    // TODO: Fix for multiply mutations into 'res', ex: OrderItemAddMutation and OrderItemEditMutation
     const response = res && res.OrderItemAddMutation;
 
     if (response && response.error) {
-      this.handleSnackBar('Erro ao adicionar item!');
+      this.handleSnackBar(response.error);
     } else {
       this.handleSnackBar('Item adicionado com sucesso!');
     }
   };
 
-  onError = () => {
-    console.log('error!');
+  onError = error => {
+    this.handleSnackBar(error);
   };
 
   handleItemPurchase = async ({ id }, orders) => {

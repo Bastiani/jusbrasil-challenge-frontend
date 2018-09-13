@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 
+import { BRL } from '../common/Money';
+
 import createQueryRenderer from '../../relay/createQueryRenderer';
 import OrderAddMutation from '../order/OrderAddMutation';
 import OrderItemAddMutation from '../order/OrderItemAddMutation';
@@ -54,22 +56,22 @@ class ProductDetails extends React.Component<Props, State> {
   };
 
   onCompleted = res => {
+    // TODO: Fix for multiply mutations into 'res', ex: OrderItemAddMutation and OrderItemEditMutation
     const response = res && res.OrderItemAddMutation;
 
     if (response && response.error) {
-      this.handleSnackBar('Erro ao adicionar item!');
+      this.handleSnackBar(response.error);
     } else {
       this.handleSnackBar('Item adicionado com sucesso!');
     }
   };
 
-  onError = () => {
-    console.log('error!');
+  onError = error => {
+    this.handleSnackBar(error);
   };
 
   handleItemPurchase = async ({ id }, orders) => {
     const { qtyInput } = this.state;
-    console.log(qtyInput);
 
     !orders.edges[0]
       ? OrderAddMutation.commit({ product: id, qty: qtyInput }, this.onCompleted, this.onError)
@@ -96,7 +98,7 @@ class ProductDetails extends React.Component<Props, State> {
             <Typography gutterBottom variant="headline" component="h2">
               {product.description}
             </Typography>
-            <Typography component="p">{product.value}</Typography>
+            <Typography component="p">{BRL(product.value).format(true)}</Typography>
           </CardContentStyled>
         </CardActionAreaStyled>
         <CardActions>

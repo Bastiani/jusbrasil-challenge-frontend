@@ -6,6 +6,7 @@ type Mutation {
   OrderCloseMutation(input: OrderCloseInput!): OrderClosePayload
   OrderItemAddMutation(input: OrderItemAddInput!): OrderItemAddPayload
   OrderItemEditMutation(input: OrderItemEditInput!): OrderItemEditPayload
+  OrderItemRemoveMutation(input: OrderItemRemoveInput!): OrderItemRemovePayload
 }
 
 # An object with an ID
@@ -32,7 +33,7 @@ type Order implements Node {
   qty: Int
 
   # Total of the products
-  total: Int
+  total: Float
 
   # Active of the product
   active: Boolean!
@@ -98,7 +99,7 @@ type OrderItem {
   qty: Int!
 
   # Total of the products
-  total: Int!
+  total: Float!
 }
 
 input OrderItemAddInput {
@@ -140,6 +141,21 @@ type OrderItemEditPayload {
   clientMutationId: String
 }
 
+input OrderItemRemoveInput {
+  # Order id of the order item
+  orderId: ID!
+
+  # Product of the order item
+  product: ID!
+  clientMutationId: String
+}
+
+type OrderItemRemovePayload {
+  orderEdge: OrderEdge
+  error: String
+  clientMutationId: String
+}
+
 # Information about pagination in a connection.
 type PageInfo {
   # When paginating forwards, are there more items?
@@ -165,7 +181,7 @@ type Product implements Node {
   description: String!
 
   # Value of the product
-  value: Int!
+  value: Float!
 
   # Quantity of the product
   qty: Int
@@ -182,7 +198,7 @@ input ProductAddInput {
   description: String!
 
   # Value of the product
-  value: Int!
+  value: Float!
 
   # Quantity of the product
   qty: Int

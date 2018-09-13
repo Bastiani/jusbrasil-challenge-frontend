@@ -4,13 +4,14 @@ import { commitMutation, graphql } from 'react-relay';
 import Environment from '../../Environment';
 
 import type {
-  OrderCloseMutationVariables,
-  OrderCloseMutationResponse,
-} from './__generated__/OrderCloseMutation.graphql.js';
+  OrderItemRemoveMutationVariables,
+  OrderItemRemoveMutationResponse,
+} from './__generated__/OrderItemRemoveMutation.graphql.js';
 
 const mutation = graphql`
-  mutation OrderCloseMutation($input: OrderCloseInput!) {
-    OrderCloseMutation(input: $input) {
+  mutation OrderItemRemoveMutation($input: OrderItemRemoveInput!) {
+    OrderItemRemoveMutation(input: $input) {
+      error
       orderEdge {
         node {
           id
@@ -18,22 +19,19 @@ const mutation = graphql`
             product {
               description
             }
-            qty
-            total
           }
           qty
           total
           active
         }
       }
-      error
     }
   }
 `;
 
 const commit = (
-  input: $PropertyType<OrderCloseMutationVariables, 'input'>,
-  onCompleted: OrderCloseMutationResponse => void,
+  input: $PropertyType<OrderItemRemoveMutationVariables, 'input'>,
+  onCompleted: OrderItemRemoveMutationResponse => void,
   onError: (error: string) => void,
 ) => {
   commitMutation(Environment, {

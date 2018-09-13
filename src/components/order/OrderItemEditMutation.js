@@ -1,7 +1,7 @@
 // @flow
 import { commitMutation, graphql } from 'react-relay';
 
-import Environment from '../../relay/environment';
+import Environment from '../../Environment';
 
 import type {
   OrderItemEditMutationVariables,
@@ -34,7 +34,7 @@ const mutation = graphql`
 const commit = (
   input: $PropertyType<OrderItemEditMutationVariables, 'input'>,
   onCompleted: OrderItemEditMutationResponse => void,
-  onError: (error: Error) => void,
+  onError: (error: string) => void,
 ) => {
   commitMutation(Environment, {
     mutation,

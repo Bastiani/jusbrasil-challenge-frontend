@@ -9,6 +9,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { graphql, createFragmentContainer } from 'react-relay';
 import { Link } from 'react-router-dom';
 
+import { BRL } from './components/common/Money';
+
 import createQueryRenderer from './relay/createQueryRenderer';
 
 const GlobalStyle = createGlobalStyle`
@@ -61,6 +63,7 @@ const ToolbarStyled = styled(Toolbar)`
 
 const LinkStyled = styled(Link)`
   text-decoration: none;
+  color: #52489c;
 `;
 
 const IconButtonStyled = styled(IconButton)`
@@ -77,15 +80,17 @@ const App = ({ children, query }) => (
             <LinkStyled to="/">JusBrasil Challenge</LinkStyled>
           </Typography>
           <div>
-            <IconButtonStyled aria-label="Cart">
-              <Badge
-                badgeContent={query.orders.edges[0] ? query.orders.edges[0].node.qty : 0}
-                color="primary"
-              >
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButtonStyled>
-            {query.orders.edges[0] ? query.orders.edges[0].node.total : 'R$ 0'}
+            <LinkStyled to="/order/list">
+              <IconButtonStyled aria-label="Cart">
+                <Badge
+                  badgeContent={query.orders.edges[0] ? query.orders.edges[0].node.qty : 0}
+                  color="primary"
+                >
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButtonStyled>
+            </LinkStyled>
+            {query.orders.edges[0] ? BRL(query.orders.edges[0].node.total).format(true) : 'R$ 0'}
           </div>
         </ToolbarStyled>
       </AppBarStyled>

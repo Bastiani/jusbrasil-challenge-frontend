@@ -34,7 +34,7 @@ const mutation = graphql`
 const commit = (
   input: $PropertyType<OrderItemAddMutationVariables, 'input'>,
   onCompleted: OrderItemAddMutationResponse => void,
-  onError: (error: Error) => void,
+  onError: (error: string) => void,
 ) => {
   commitMutation(Environment, {
     mutation,
