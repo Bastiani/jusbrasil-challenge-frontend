@@ -147,7 +147,7 @@ class OrderList extends React.Component<Props, State> {
         >
           Remover
         </Button>
-        {`Quantidade adicionada: ${orderItem.qty}`}
+        <span>{`Quantidade adicionada: ${orderItem.qty}`}</span>
       </CardActions>
     </CardStyled>
   );
