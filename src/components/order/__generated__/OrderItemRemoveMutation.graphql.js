@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 02725972152f06df312f7edfa4f64184
+ * @relayHash 94f092a811fe05c1c90bd5c9900e2617
  */
 
 /* eslint-disable */
@@ -19,20 +19,24 @@ export type OrderItemRemoveMutationVariables = {|
 |};
 export type OrderItemRemoveMutationResponse = {|
   +OrderItemRemoveMutation: ?{|
-    +error: ?string,
     +orderEdge: ?{|
+      +__typename: string,
+      +cursor: string,
       +node: {|
         +id: string,
         +orderItems: ?$ReadOnlyArray<?{|
           +product: {|
             +description: string
-          |}
+          |},
+          +qty: number,
+          +total: number,
         |}>,
         +qty: ?number,
         +total: ?number,
         +active: boolean,
-      |}
+      |},
     |},
+    +error: ?string,
   |}
 |};
 export type OrderItemRemoveMutation = {|
@@ -47,8 +51,9 @@ mutation OrderItemRemoveMutation(
   $input: OrderItemRemoveInput!
 ) {
   OrderItemRemoveMutation(input: $input) {
-    error
     orderEdge {
+      __typename
+      cursor
       node {
         id
         orderItems {
@@ -56,12 +61,15 @@ mutation OrderItemRemoveMutation(
             description
             id
           }
+          qty
+          total
         }
         qty
         total
         active
       }
     }
+    error
   }
 }
 */
@@ -86,42 +94,56 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "error",
+  "name": "__typename",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "cursor",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "description",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "qty",
+  "name": "description",
   "args": null,
   "storageKey": null
 },
 v6 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "total",
+  "name": "qty",
   "args": null,
   "storageKey": null
 },
 v7 = {
   "kind": "ScalarField",
   "alias": null,
+  "name": "total",
+  "args": null,
+  "storageKey": null
+},
+v8 = {
+  "kind": "ScalarField",
+  "alias": null,
   "name": "active",
+  "args": null,
+  "storageKey": null
+},
+v9 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "error",
   "args": null,
   "storageKey": null
 };
@@ -130,7 +152,7 @@ return {
   "operationKind": "mutation",
   "name": "OrderItemRemoveMutation",
   "id": null,
-  "text": "mutation OrderItemRemoveMutation(\n  $input: OrderItemRemoveInput!\n) {\n  OrderItemRemoveMutation(input: $input) {\n    error\n    orderEdge {\n      node {\n        id\n        orderItems {\n          product {\n            description\n            id\n          }\n        }\n        qty\n        total\n        active\n      }\n    }\n  }\n}\n",
+  "text": "mutation OrderItemRemoveMutation(\n  $input: OrderItemRemoveInput!\n) {\n  OrderItemRemoveMutation(input: $input) {\n    orderEdge {\n      __typename\n      cursor\n      node {\n        id\n        orderItems {\n          product {\n            description\n            id\n          }\n          qty\n          total\n        }\n        qty\n        total\n        active\n      }\n    }\n    error\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -148,7 +170,6 @@ return {
         "concreteType": "OrderItemRemovePayload",
         "plural": false,
         "selections": [
-          v2,
           {
             "kind": "LinkedField",
             "alias": null,
@@ -158,6 +179,8 @@ return {
             "concreteType": "OrderEdge",
             "plural": false,
             "selections": [
+              v2,
+              v3,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -167,7 +190,7 @@ return {
                 "concreteType": "Order",
                 "plural": false,
                 "selections": [
-                  v3,
+                  v4,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -186,18 +209,21 @@ return {
                         "concreteType": "Product",
                         "plural": false,
                         "selections": [
-                          v4
+                          v5
                         ]
-                      }
+                      },
+                      v6,
+                      v7
                     ]
                   },
-                  v5,
                   v6,
-                  v7
+                  v7,
+                  v8
                 ]
               }
             ]
-          }
+          },
+          v9
         ]
       }
     ]
@@ -216,7 +242,6 @@ return {
         "concreteType": "OrderItemRemovePayload",
         "plural": false,
         "selections": [
-          v2,
           {
             "kind": "LinkedField",
             "alias": null,
@@ -226,6 +251,8 @@ return {
             "concreteType": "OrderEdge",
             "plural": false,
             "selections": [
+              v2,
+              v3,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -235,7 +262,7 @@ return {
                 "concreteType": "Order",
                 "plural": false,
                 "selections": [
-                  v3,
+                  v4,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -254,19 +281,22 @@ return {
                         "concreteType": "Product",
                         "plural": false,
                         "selections": [
-                          v4,
-                          v3
+                          v5,
+                          v4
                         ]
-                      }
+                      },
+                      v6,
+                      v7
                     ]
                   },
-                  v5,
                   v6,
-                  v7
+                  v7,
+                  v8
                 ]
               }
             ]
-          }
+          },
+          v9
         ]
       }
     ]
@@ -274,5 +304,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c1f451a24229c935a39c44d9c64075e7';
+(node/*: any*/).hash = 'de9c38e1e4f04b373bf02bccc56e327c';
 module.exports = node;

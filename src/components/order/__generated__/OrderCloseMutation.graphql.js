@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a76e824ee49a7636111717907bfa05e8
+ * @relayHash a126f7c80b69f761c7a35abe919e759c
  */
 
 /* eslint-disable */
@@ -19,20 +19,18 @@ export type OrderCloseMutationVariables = {|
 |};
 export type OrderCloseMutationResponse = {|
   +OrderCloseMutation: ?{|
-    +orderEdge: ?{|
-      +node: {|
-        +id: string,
-        +orderItems: ?$ReadOnlyArray<?{|
-          +product: {|
-            +description: string
-          |},
-          +qty: number,
-          +total: number,
-        |}>,
-        +qty: ?number,
-        +total: ?number,
-        +active: boolean,
-      |}
+    +order: ?{|
+      +id: string,
+      +orderItems: ?$ReadOnlyArray<?{|
+        +product: {|
+          +description: string
+        |},
+        +qty: number,
+        +total: number,
+      |}>,
+      +qty: ?number,
+      +total: ?number,
+      +active: boolean,
     |},
     +error: ?string,
   |}
@@ -49,21 +47,19 @@ mutation OrderCloseMutation(
   $input: OrderCloseInput!
 ) {
   OrderCloseMutation(input: $input) {
-    orderEdge {
-      node {
-        id
-        orderItems {
-          product {
-            description
-            id
-          }
-          qty
-          total
+    order {
+      id
+      orderItems {
+        product {
+          description
+          id
         }
         qty
         total
-        active
       }
+      qty
+      total
+      active
     }
     error
   }
@@ -134,7 +130,7 @@ return {
   "operationKind": "mutation",
   "name": "OrderCloseMutation",
   "id": null,
-  "text": "mutation OrderCloseMutation(\n  $input: OrderCloseInput!\n) {\n  OrderCloseMutation(input: $input) {\n    orderEdge {\n      node {\n        id\n        orderItems {\n          product {\n            description\n            id\n          }\n          qty\n          total\n        }\n        qty\n        total\n        active\n      }\n    }\n    error\n  }\n}\n",
+  "text": "mutation OrderCloseMutation(\n  $input: OrderCloseInput!\n) {\n  OrderCloseMutation(input: $input) {\n    order {\n      id\n      orderItems {\n        product {\n          description\n          id\n        }\n        qty\n        total\n      }\n      qty\n      total\n      active\n    }\n    error\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -155,52 +151,41 @@ return {
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "orderEdge",
+            "name": "order",
             "storageKey": null,
             "args": null,
-            "concreteType": "OrderEdge",
+            "concreteType": "Order",
             "plural": false,
             "selections": [
+              v2,
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "name": "node",
+                "name": "orderItems",
                 "storageKey": null,
                 "args": null,
-                "concreteType": "Order",
-                "plural": false,
+                "concreteType": "OrderItem",
+                "plural": true,
                 "selections": [
-                  v2,
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "name": "orderItems",
+                    "name": "product",
                     "storageKey": null,
                     "args": null,
-                    "concreteType": "OrderItem",
-                    "plural": true,
+                    "concreteType": "Product",
+                    "plural": false,
                     "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "name": "product",
-                        "storageKey": null,
-                        "args": null,
-                        "concreteType": "Product",
-                        "plural": false,
-                        "selections": [
-                          v3
-                        ]
-                      },
-                      v4,
-                      v5
+                      v3
                     ]
                   },
                   v4,
-                  v5,
-                  v6
+                  v5
                 ]
-              }
+              },
+              v4,
+              v5,
+              v6
             ]
           },
           v7
@@ -225,53 +210,42 @@ return {
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "orderEdge",
+            "name": "order",
             "storageKey": null,
             "args": null,
-            "concreteType": "OrderEdge",
+            "concreteType": "Order",
             "plural": false,
             "selections": [
+              v2,
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "name": "node",
+                "name": "orderItems",
                 "storageKey": null,
                 "args": null,
-                "concreteType": "Order",
-                "plural": false,
+                "concreteType": "OrderItem",
+                "plural": true,
                 "selections": [
-                  v2,
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "name": "orderItems",
+                    "name": "product",
                     "storageKey": null,
                     "args": null,
-                    "concreteType": "OrderItem",
-                    "plural": true,
+                    "concreteType": "Product",
+                    "plural": false,
                     "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "name": "product",
-                        "storageKey": null,
-                        "args": null,
-                        "concreteType": "Product",
-                        "plural": false,
-                        "selections": [
-                          v3,
-                          v2
-                        ]
-                      },
-                      v4,
-                      v5
+                      v3,
+                      v2
                     ]
                   },
                   v4,
-                  v5,
-                  v6
+                  v5
                 ]
-              }
+              },
+              v4,
+              v5,
+              v6
             ]
           },
           v7
@@ -282,5 +256,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c011321e493bf864c65b5d5c89166cf5';
+(node/*: any*/).hash = '748c4c54d60c573564054c6b235514c4';
 module.exports = node;

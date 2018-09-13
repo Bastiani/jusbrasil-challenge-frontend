@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 535e9d5a7cf362ada2aa4e635ec41bcb
+ * @relayHash 9fd5a8540e3ed6284728b138df6c6e99
  */
 
 /* eslint-disable */
@@ -20,20 +20,18 @@ export type OrderItemAddMutationVariables = {|
 |};
 export type OrderItemAddMutationResponse = {|
   +OrderItemAddMutation: ?{|
-    +orderEdge: ?{|
-      +node: {|
-        +id: string,
-        +orderItems: ?$ReadOnlyArray<?{|
-          +product: {|
-            +description: string
-          |},
-          +qty: number,
-          +total: number,
-        |}>,
-        +qty: ?number,
-        +total: ?number,
-        +active: boolean,
-      |}
+    +order: ?{|
+      +id: string,
+      +orderItems: ?$ReadOnlyArray<?{|
+        +product: {|
+          +description: string
+        |},
+        +qty: number,
+        +total: number,
+      |}>,
+      +qty: ?number,
+      +total: ?number,
+      +active: boolean,
     |},
     +error: ?string,
   |}
@@ -50,21 +48,19 @@ mutation OrderItemAddMutation(
   $input: OrderItemAddInput!
 ) {
   OrderItemAddMutation(input: $input) {
-    orderEdge {
-      node {
-        id
-        orderItems {
-          product {
-            description
-            id
-          }
-          qty
-          total
+    order {
+      id
+      orderItems {
+        product {
+          description
+          id
         }
         qty
         total
-        active
       }
+      qty
+      total
+      active
     }
     error
   }
@@ -135,7 +131,7 @@ return {
   "operationKind": "mutation",
   "name": "OrderItemAddMutation",
   "id": null,
-  "text": "mutation OrderItemAddMutation(\n  $input: OrderItemAddInput!\n) {\n  OrderItemAddMutation(input: $input) {\n    orderEdge {\n      node {\n        id\n        orderItems {\n          product {\n            description\n            id\n          }\n          qty\n          total\n        }\n        qty\n        total\n        active\n      }\n    }\n    error\n  }\n}\n",
+  "text": "mutation OrderItemAddMutation(\n  $input: OrderItemAddInput!\n) {\n  OrderItemAddMutation(input: $input) {\n    order {\n      id\n      orderItems {\n        product {\n          description\n          id\n        }\n        qty\n        total\n      }\n      qty\n      total\n      active\n    }\n    error\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -156,52 +152,41 @@ return {
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "orderEdge",
+            "name": "order",
             "storageKey": null,
             "args": null,
-            "concreteType": "OrderEdge",
+            "concreteType": "Order",
             "plural": false,
             "selections": [
+              v2,
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "name": "node",
+                "name": "orderItems",
                 "storageKey": null,
                 "args": null,
-                "concreteType": "Order",
-                "plural": false,
+                "concreteType": "OrderItem",
+                "plural": true,
                 "selections": [
-                  v2,
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "name": "orderItems",
+                    "name": "product",
                     "storageKey": null,
                     "args": null,
-                    "concreteType": "OrderItem",
-                    "plural": true,
+                    "concreteType": "Product",
+                    "plural": false,
                     "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "name": "product",
-                        "storageKey": null,
-                        "args": null,
-                        "concreteType": "Product",
-                        "plural": false,
-                        "selections": [
-                          v3
-                        ]
-                      },
-                      v4,
-                      v5
+                      v3
                     ]
                   },
                   v4,
-                  v5,
-                  v6
+                  v5
                 ]
-              }
+              },
+              v4,
+              v5,
+              v6
             ]
           },
           v7
@@ -226,53 +211,42 @@ return {
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "orderEdge",
+            "name": "order",
             "storageKey": null,
             "args": null,
-            "concreteType": "OrderEdge",
+            "concreteType": "Order",
             "plural": false,
             "selections": [
+              v2,
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "name": "node",
+                "name": "orderItems",
                 "storageKey": null,
                 "args": null,
-                "concreteType": "Order",
-                "plural": false,
+                "concreteType": "OrderItem",
+                "plural": true,
                 "selections": [
-                  v2,
                   {
                     "kind": "LinkedField",
                     "alias": null,
-                    "name": "orderItems",
+                    "name": "product",
                     "storageKey": null,
                     "args": null,
-                    "concreteType": "OrderItem",
-                    "plural": true,
+                    "concreteType": "Product",
+                    "plural": false,
                     "selections": [
-                      {
-                        "kind": "LinkedField",
-                        "alias": null,
-                        "name": "product",
-                        "storageKey": null,
-                        "args": null,
-                        "concreteType": "Product",
-                        "plural": false,
-                        "selections": [
-                          v3,
-                          v2
-                        ]
-                      },
-                      v4,
-                      v5
+                      v3,
+                      v2
                     ]
                   },
                   v4,
-                  v5,
-                  v6
+                  v5
                 ]
-              }
+              },
+              v4,
+              v5,
+              v6
             ]
           },
           v7
@@ -283,5 +257,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '29c8f4d0cbfd3b495b133ec7d2c59b6d';
+(node/*: any*/).hash = '8bc8abbebe9566c0890365a36d5ca02d';
 module.exports = node;

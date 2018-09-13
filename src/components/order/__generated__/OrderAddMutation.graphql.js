@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 0ada1b41c805f468d55341f3cd1838a1
+ * @relayHash 062bcc9626523e936032f47048662097
  */
 
 /* eslint-disable */
@@ -20,6 +20,8 @@ export type OrderAddMutationVariables = {|
 export type OrderAddMutationResponse = {|
   +OrderAddMutation: ?{|
     +orderEdge: ?{|
+      +__typename: string,
+      +cursor: string,
       +node: {|
         +id: string,
         +orderItems: ?$ReadOnlyArray<?{|
@@ -32,7 +34,7 @@ export type OrderAddMutationResponse = {|
         +qty: ?number,
         +total: ?number,
         +active: boolean,
-      |}
+      |},
     |},
     +error: ?string,
   |}
@@ -50,6 +52,8 @@ mutation OrderAddMutation(
 ) {
   OrderAddMutation(input: $input) {
     orderEdge {
+      __typename
+      cursor
       node {
         id
         orderItems {
@@ -90,39 +94,53 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "__typename",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "description",
+  "name": "cursor",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "qty",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "total",
+  "name": "description",
   "args": null,
   "storageKey": null
 },
 v6 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "active",
+  "name": "qty",
   "args": null,
   "storageKey": null
 },
 v7 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "total",
+  "args": null,
+  "storageKey": null
+},
+v8 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "active",
+  "args": null,
+  "storageKey": null
+},
+v9 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "error",
@@ -134,7 +152,7 @@ return {
   "operationKind": "mutation",
   "name": "OrderAddMutation",
   "id": null,
-  "text": "mutation OrderAddMutation(\n  $input: OrderAddInput!\n) {\n  OrderAddMutation(input: $input) {\n    orderEdge {\n      node {\n        id\n        orderItems {\n          product {\n            description\n            id\n          }\n          qty\n          total\n        }\n        qty\n        total\n        active\n      }\n    }\n    error\n  }\n}\n",
+  "text": "mutation OrderAddMutation(\n  $input: OrderAddInput!\n) {\n  OrderAddMutation(input: $input) {\n    orderEdge {\n      __typename\n      cursor\n      node {\n        id\n        orderItems {\n          product {\n            description\n            id\n          }\n          qty\n          total\n        }\n        qty\n        total\n        active\n      }\n    }\n    error\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
@@ -161,6 +179,8 @@ return {
             "concreteType": "OrderEdge",
             "plural": false,
             "selections": [
+              v2,
+              v3,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -170,7 +190,7 @@ return {
                 "concreteType": "Order",
                 "plural": false,
                 "selections": [
-                  v2,
+                  v4,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -189,21 +209,21 @@ return {
                         "concreteType": "Product",
                         "plural": false,
                         "selections": [
-                          v3
+                          v5
                         ]
                       },
-                      v4,
-                      v5
+                      v6,
+                      v7
                     ]
                   },
-                  v4,
-                  v5,
-                  v6
+                  v6,
+                  v7,
+                  v8
                 ]
               }
             ]
           },
-          v7
+          v9
         ]
       }
     ]
@@ -231,6 +251,8 @@ return {
             "concreteType": "OrderEdge",
             "plural": false,
             "selections": [
+              v2,
+              v3,
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -240,7 +262,7 @@ return {
                 "concreteType": "Order",
                 "plural": false,
                 "selections": [
-                  v2,
+                  v4,
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -259,22 +281,22 @@ return {
                         "concreteType": "Product",
                         "plural": false,
                         "selections": [
-                          v3,
-                          v2
+                          v5,
+                          v4
                         ]
                       },
-                      v4,
-                      v5
+                      v6,
+                      v7
                     ]
                   },
-                  v4,
-                  v5,
-                  v6
+                  v6,
+                  v7,
+                  v8
                 ]
               }
             ]
           },
-          v7
+          v9
         ]
       }
     ]
@@ -282,5 +304,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '79f8fe96b86da42a023a9fad1d34d63f';
+(node/*: any*/).hash = '3ec1e0b36fa2522c82b73b7c0704af75';
 module.exports = node;
