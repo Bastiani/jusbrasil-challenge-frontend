@@ -129,7 +129,7 @@ class OrderList extends React.Component<Props, State> {
           label="Quantidade"
           type="number"
           defaultValue={orderItem.qty}
-          inputProps={{ min: '1', step: '1' }}
+          inputProps={{ min: '1', max: orderItem.product.qty, step: '1' }}
           onChange={event => this.setState({ qtyInput: event.target.value })}
         />
         <Button
