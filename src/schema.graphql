@@ -15,11 +15,6 @@ interface Node {
   id: ID!
 }
 
-enum OperationType {
-  ADD
-  REMOVE
-}
-
 # Order type definition
 type Order implements Node {
   # The ID of an object
@@ -129,9 +124,6 @@ input OrderItemEditInput {
 
   # Quantity of the order item
   qty: Int!
-
-  # Operation of the order item
-  operation: OperationType!
   clientMutationId: String
 }
 

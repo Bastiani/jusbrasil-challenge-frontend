@@ -16,8 +16,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { BRL } from '../common/Money';
 
 import createQueryRenderer from '../../relay/createQueryRenderer';
-import OrderAddMutation from './OrderAddMutation';
-import OrderItemAddMutation from './OrderItemAddMutation';
+import OrderItemEditMutation from './OrderItemEditMutation';
 import OrderItemRemoveMutation from './OrderItemRemoveMutation';
 
 const CardStyled = styled(Card)`
@@ -87,7 +86,7 @@ class OrderList extends React.Component<Props, State> {
 
   handleItemPurchase = async ({ id }, orders) => {
     const { qtyInput } = this.state;
-    OrderItemAddMutation.commit(
+    OrderItemEditMutation.commit(
       { orderId: orders.edges[0].node.id, product: id, qty: qtyInput },
       this.onCompleted,
       this.onError,
@@ -129,7 +128,7 @@ class OrderList extends React.Component<Props, State> {
         <TextFieldStyled
           label="Quantidade"
           type="number"
-          defaultValue={1}
+          defaultValue={orderItem.qty}
           inputProps={{ min: '1', step: '1' }}
           onChange={event => this.setState({ qtyInput: event.target.value })}
         />
@@ -138,14 +137,14 @@ class OrderList extends React.Component<Props, State> {
           color="primary"
           onClick={() => this.handleItemPurchase(orderItem.product, orders)}
         >
-          Adicionar
+          Adicionar/Remover
         </Button>
         <Button
           size="small"
           color="primary"
           onClick={() => this.handleItemRemove(orderItem.product, orders)}
         >
-          Remover
+          Remover do Carrinho
         </Button>
         <span>{`Quantidade adicionada: ${orderItem.qty}`}</span>
       </CardActions>
