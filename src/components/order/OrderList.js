@@ -75,14 +75,14 @@ class OrderList extends React.Component<Props, State> {
     const response = res && res.OrderItemAddMutation;
 
     if (response && response.error) {
-      this.handleSnackBar('Erro ao adicionar item!');
+      this.handleSnackBar('Erro na operação!');
     } else {
-      this.handleSnackBar('Item adicionado com sucesso!');
+      this.handleSnackBar('Operação efetuada com sucesso!');
     }
   };
 
   onError = () => {
-    this.handleSnackBar('Erro ao adicionar item!');
+    this.handleSnackBar('Erro na operação!');
   };
 
   handleItemPurchase = async ({ id }, orders) => {

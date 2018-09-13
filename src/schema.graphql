@@ -64,7 +64,7 @@ input OrderCloseInput {
 }
 
 type OrderClosePayload {
-  orderEdge: OrderEdge
+  order: Order
   error: String
   clientMutationId: String
 }
@@ -115,7 +115,7 @@ input OrderItemAddInput {
 }
 
 type OrderItemAddPayload {
-  orderEdge: OrderEdge
+  order: Order
   error: String
   clientMutationId: String
 }
@@ -136,7 +136,7 @@ input OrderItemEditInput {
 }
 
 type OrderItemEditPayload {
-  orderEdge: OrderEdge
+  order: Order
   error: String
   clientMutationId: String
 }

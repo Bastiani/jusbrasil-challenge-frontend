@@ -11,20 +11,18 @@ import type {
 const mutation = graphql`
   mutation OrderItemAddMutation($input: OrderItemAddInput!) {
     OrderItemAddMutation(input: $input) {
-      orderEdge {
-        node {
-          id
-          orderItems {
-            product {
-              description
-            }
-            qty
-            total
+      order {
+        id
+        orderItems {
+          product {
+            description
           }
           qty
           total
-          active
         }
+        qty
+        total
+        active
       }
       error
     }
