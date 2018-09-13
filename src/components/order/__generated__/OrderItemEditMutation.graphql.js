@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 28d02d66d9768a31420462fc197fc4f7
+ * @relayHash 532137f11ac44dbdad0a75be5c5426aa
  */
 
 /* eslint-disable */
@@ -9,12 +9,10 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type OperationType = "ADD" | "REMOVE" | "%future added value";
 export type OrderItemEditInput = {
   orderId: string,
   product: string,
   qty: number,
-  operation: OperationType,
   clientMutationId?: ?string,
 };
 export type OrderItemEditMutationVariables = {|
