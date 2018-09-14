@@ -11,18 +11,14 @@ import type {
 const mutation = graphql`
   mutation OrderItemEditMutation($input: OrderItemEditInput!) {
     OrderItemEditMutation(input: $input) {
-      order {
-        id
-        orderItems {
-          product {
-            description
+      orders(first: 1, active: true) @connection(key: "App_orders", filters: []) {
+        edges {
+          node {
+            id
+            qty
+            total
           }
-          qty
-          total
         }
-        qty
-        total
-        active
       }
       error
     }

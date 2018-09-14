@@ -129,6 +129,9 @@ input OrderItemEditInput {
 
 type OrderItemEditPayload {
   order: Order
+
+  # Get orders
+  orders(after: String, first: Int, before: String, last: Int, active: Boolean): OrderConnection
   error: String
   clientMutationId: String
 }

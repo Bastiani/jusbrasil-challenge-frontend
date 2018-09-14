@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 532137f11ac44dbdad0a75be5c5426aa
+ * @relayHash 81418dcc584539d2e5708a49264a86d6
  */
 
 /* eslint-disable */
@@ -20,18 +20,14 @@ export type OrderItemEditMutationVariables = {|
 |};
 export type OrderItemEditMutationResponse = {|
   +OrderItemEditMutation: ?{|
-    +order: ?{|
-      +id: string,
-      +orderItems: ?$ReadOnlyArray<?{|
-        +product: {|
-          +description: string
-        |},
-        +qty: number,
-        +total: number,
-      |}>,
-      +qty: ?number,
-      +total: ?number,
-      +active: boolean,
+    +orders: ?{|
+      +edges: ?$ReadOnlyArray<?{|
+        +node: {|
+          +id: string,
+          +qty: ?number,
+          +total: ?number,
+        |}
+      |}>
     |},
     +error: ?string,
   |}
@@ -48,19 +44,20 @@ mutation OrderItemEditMutation(
   $input: OrderItemEditInput!
 ) {
   OrderItemEditMutation(input: $input) {
-    order {
-      id
-      orderItems {
-        product {
-          description
+    orders(first: 1, active: true) {
+      edges {
+        node {
           id
+          qty
+          total
+          __typename
         }
-        qty
-        total
+        cursor
       }
-      qty
-      total
-      active
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
     error
   }
@@ -84,55 +81,130 @@ v1 = [
     "type": "OrderItemEditInput!"
   }
 ],
-v2 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-},
+v2 = [
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "edges",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "OrderEdge",
+    "plural": true,
+    "selections": [
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "node",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Order",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "id",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "qty",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "total",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "__typename",
+            "args": null,
+            "storageKey": null
+          }
+        ]
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "cursor",
+        "args": null,
+        "storageKey": null
+      }
+    ]
+  },
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "pageInfo",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "PageInfo",
+    "plural": false,
+    "selections": [
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "endCursor",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "hasNextPage",
+        "args": null,
+        "storageKey": null
+      }
+    ]
+  }
+],
 v3 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "description",
-  "args": null,
-  "storageKey": null
-},
-v4 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "qty",
-  "args": null,
-  "storageKey": null
-},
-v5 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "total",
-  "args": null,
-  "storageKey": null
-},
-v6 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "active",
-  "args": null,
-  "storageKey": null
-},
-v7 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "error",
   "args": null,
   "storageKey": null
-};
+},
+v4 = [
+  {
+    "kind": "Literal",
+    "name": "active",
+    "value": true,
+    "type": "Boolean"
+  },
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1,
+    "type": "Int"
+  }
+];
 return {
   "kind": "Request",
   "operationKind": "mutation",
   "name": "OrderItemEditMutation",
   "id": null,
-  "text": "mutation OrderItemEditMutation(\n  $input: OrderItemEditInput!\n) {\n  OrderItemEditMutation(input: $input) {\n    order {\n      id\n      orderItems {\n        product {\n          description\n          id\n        }\n        qty\n        total\n      }\n      qty\n      total\n      active\n    }\n    error\n  }\n}\n",
-  "metadata": {},
+  "text": "mutation OrderItemEditMutation(\n  $input: OrderItemEditInput!\n) {\n  OrderItemEditMutation(input: $input) {\n    orders(first: 1, active: true) {\n      edges {\n        node {\n          id\n          qty\n          total\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    error\n  }\n}\n",
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "OrderItemEditMutation",
+          "orders"
+        ]
+      }
+    ]
+  },
   "fragment": {
     "kind": "Fragment",
     "name": "OrderItemEditMutation",
@@ -151,45 +223,15 @@ return {
         "selections": [
           {
             "kind": "LinkedField",
-            "alias": null,
-            "name": "order",
+            "alias": "orders",
+            "name": "__App_orders_connection",
             "storageKey": null,
             "args": null,
-            "concreteType": "Order",
+            "concreteType": "OrderConnection",
             "plural": false,
-            "selections": [
-              v2,
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "name": "orderItems",
-                "storageKey": null,
-                "args": null,
-                "concreteType": "OrderItem",
-                "plural": true,
-                "selections": [
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "product",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "Product",
-                    "plural": false,
-                    "selections": [
-                      v3
-                    ]
-                  },
-                  v4,
-                  v5
-                ]
-              },
-              v4,
-              v5,
-              v6
-            ]
+            "selections": v2
           },
-          v7
+          v3
         ]
       }
     ]
@@ -211,45 +253,23 @@ return {
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "order",
-            "storageKey": null,
-            "args": null,
-            "concreteType": "Order",
+            "name": "orders",
+            "storageKey": "orders(active:true,first:1)",
+            "args": v4,
+            "concreteType": "OrderConnection",
             "plural": false,
-            "selections": [
-              v2,
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "name": "orderItems",
-                "storageKey": null,
-                "args": null,
-                "concreteType": "OrderItem",
-                "plural": true,
-                "selections": [
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "product",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "Product",
-                    "plural": false,
-                    "selections": [
-                      v3,
-                      v2
-                    ]
-                  },
-                  v4,
-                  v5
-                ]
-              },
-              v4,
-              v5,
-              v6
-            ]
+            "selections": v2
           },
-          v7
+          {
+            "kind": "LinkedHandle",
+            "alias": null,
+            "name": "orders",
+            "args": v4,
+            "handle": "connection",
+            "key": "App_orders",
+            "filters": []
+          },
+          v3
         ]
       }
     ]
@@ -257,5 +277,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '07eb33416ebf5fbc74598f0fd652b678';
+(node/*: any*/).hash = '3d26aef44be98d6db6cb5406f131543c';
 module.exports = node;
