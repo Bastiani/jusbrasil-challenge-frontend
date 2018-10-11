@@ -17,6 +17,7 @@ import { BRL } from '../common/Money';
 import createQueryRenderer from '../../relay/createQueryRenderer';
 import OrderAddMutation from '../order/OrderAddMutation';
 import OrderItemAddMutation from '../order/OrderItemAddMutation';
+import subscribe from '../../subscriptions/ProductSubscription';
 
 const CardStyled = styled(Card)`
   && {
@@ -88,6 +89,10 @@ class ListProducts extends React.Component<Props, State> {
     snackBarOpen: false,
     snackBarMessage: '',
   };
+
+  componentDidMount() {
+    subscribe();
+  }
 
   onCompleted = res => {
     // TODO: Fix for multiply mutations into 'res', ex: OrderItemAddMutation and OrderItemEditMutation

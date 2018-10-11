@@ -188,6 +188,10 @@ type Product implements Node {
   active: Boolean!
 }
 
+type ProductAddedPayload {
+  productEdge: ProductEdge
+}
+
 input ProductAddInput {
   # Description of the product
   description: String!
@@ -207,6 +211,7 @@ input ProductAddInput {
 }
 
 type ProductAddPayload {
+  productEdge: ProductEdge
   product: Product
   error: String
   clientMutationId: String
@@ -253,6 +258,10 @@ type Query {
 
   # Get orders
   orders(after: String, first: Int, before: String, last: Int, active: Boolean): OrderConnection!
+}
+
+type Subscription {
+  ProductAdded: ProductAddedPayload
 }
 
 # User type definition
